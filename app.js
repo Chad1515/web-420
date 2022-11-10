@@ -33,7 +33,7 @@ const options = {
          version: "1.0.0",
       },
    },
-   apis: ["./routes/*.js"],
+   apis: ["./oneal-composer-routes.js"],
 };
 
 // openapi variable
