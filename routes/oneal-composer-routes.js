@@ -15,7 +15,7 @@ const Composer = require('../models/oneal-composer')
 /**
  * findAllComposers
  * @openapi
- * api/composers:
+ * /api/composers:
  *   get:
  *     tags:
  *       - Composers
@@ -107,15 +107,20 @@ const Composer = require('../models/oneal-composer')
  *     description: API for adding a new composer document to MongoDB Atlas
  *     summary: Creates a new composer document
  *     requestBody:
- *       description: Composer information
- *       content:
- *         application/json:
- *           schema:
- *             required:
- *               - type
- *             properties:
- *               type:
- *                 type: string
+ *      description: Composer information
+ *      content:
+ *        application/json:
+ *          schema:
+ *            required:
+ *              - firstName
+ *              - lastName
+ *            properties:
+ *              firstName:
+ *                description: First name of composer
+ *                type: string
+ *              lastName:
+ *                description: Last name of composer
+ *                type: string
  *     responses:
  *       '200':
  *         description: Composer added
