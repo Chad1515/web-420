@@ -15,7 +15,7 @@ const Composer = require('../models/oneal-composer')
 /**
  * findAllComposers
  * @openapi
- * /api/composers:
+ * api/composers:
  *   get:
  *     tags:
  *       - Composers
@@ -51,34 +51,37 @@ const Composer = require('../models/oneal-composer')
 })
 
 
-/** findAllComposersByID
-*@openapi
-* /composers/{id}:
-*   get:
-*   summary: Returns a composer by ID
-*   description: |
-*          Returns composers first and last name by ID
-*   parameters:
-*    - name: id
-*      in: path
-*      schema:
-*        type: string
-*      required: true
-* responses:
-*   '200':    # status code
-*      description: A JSON array of composers names          
-*   '500':    # status code
-*      description: Server exceptions   
-*   '501':    # status code
-*      description: MongoDB exceptions*/
-
-router.get('/composers/:id', async(req, res) => {
+/**
+ * findComposerById
+ * @openapi
+ * /api/composers/{id}:
+ *   get:
+ *     tags:
+ *       - Composers
+ *     description:  API for returning a composer document
+ *     summary: returns a composer document
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         description: Composer document id
+ *         schema:
+ *           type: string
+ *     responses:
+ *       '200':
+ *         description: Composer document
+ *       '500':
+ *         description: Server exception
+ *       '501':
+ *         description: MongoDB Exception
+ */
+ router.get('/composers/{:id}', async(req, res) => {
     try {
         Composer.findOne({'_id': req.params.id}, function(err, composer) {
             if (err) {
                 console.log(err);
-                res.status(501).send({
-                    'message': `MongoDB Exeception: ${err}`
+                res.status(500).send({
+                    'message': `MongoDB Exception: ${err}`
                 })
             } else {
                 console.log(composer);
@@ -93,34 +96,45 @@ router.get('/composers/:id', async(req, res) => {
     }
 })
 
-
-/**createComposer
-* @openapi
-*  /composers:
-*     post:
-*      summary: Creates new composer.
-*      description: |
-*        Creates and adds new composer to the catalog.
-*      responses:
-*        '200':    # status code
-*          description: A JSON array for new composer.
-*        '500':    # status code
-*          description: Server exceptions
-*        '501':    # status code
-*          description: MongoDB exceptions*/
-
-router.post('/composers', async(req, res) => {
+/**
+ * createComposer
+ * @openapi
+ * /api/composers:
+ *   post:
+ *     tags:
+ *       - Composers
+ *     name: createComposer
+ *     description: API for adding a new composer document to MongoDB Atlas
+ *     summary: Creates a new composer document
+ *     requestBody:
+ *       description: Composer information
+ *       content:
+ *         application/json:
+ *           schema:
+ *             required:
+ *               - type
+ *             properties:
+ *               type:
+ *                 type: string
+ *     responses:
+ *       '200':
+ *         description: Composer added
+ *       '500':
+ *         description: Server Exception
+ *       '501':
+ *         description: MongoDB Exception
+ */
+ router.post('/composers', async(req, res) => {
     try {
         const newComposer = {
-            firstName: req.body.type,
-            lastName: req.body.type
+            type: req.body.type
         }
 
         await Composer.create(newComposer, function(err, composer) {
             if (err) {
                 console.log(err);
                 res.status(501).send({
-                    'message': `MongoDB Exeception: ${err}`
+                    'message': `MongoDB Exception: ${err}`
                 })
             } else {
                 console.log(composer);
@@ -134,5 +148,3 @@ router.post('/composers', async(req, res) => {
         })
     }
 })
-
-module.exports = router;
