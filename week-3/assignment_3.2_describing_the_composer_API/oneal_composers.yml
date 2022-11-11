@@ -1,0 +1,75 @@
+# Title: Assignment 3.2 oneal_composers.yaml
+# Author: Professor Krasso
+# Date: 11/02/2022
+# Modified By: Chad ONeal
+# Description: composers.yaml file
+
+openapi: "3.0.0"
+info:
+  title: Composer's API
+  version: 1.0.0
+
+paths:
+  /composers:
+    get:
+      tags:
+        - Composers
+      description: API for returning a list of all composers.
+      summary: returns a list of composer documents
+      responses:
+        '200': 
+          description: Composer documents
+        '500': 
+          description: Server exception
+        '501': 
+          description: MongoDB exception
+        
+    post:
+      tags:
+        - Composers
+      description: API for adding a new composer
+      summary: Creates and adds composer document
+      requestBody:
+        description: Composer information
+        content:
+          application/json:
+            schema:
+              required:
+                - firstName
+                - lastName
+              properties:
+                firstName:
+                  description: First name of composer
+                  type: string
+                lastName:
+                  description: Last name of composer
+                  type: string
+      responses:
+        '200': 
+          description: Composer added
+        '500': 
+          description: Server Exception
+        '501': #status code
+          description: MongoDB Exception
+          
+  /composers/{id}:
+    get:
+      tags:
+        - Composers
+      description: API for returning a composer by ID
+      summary: returns a composers first and last name by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The composer ID requested by the user
+          schema:
+            type: string
+      responses:
+        '200': 
+          description: Composer document in JSON format
+        '500': 
+          description: Server Exception
+        '501': 
+          description: MongoDB Exception
+          
