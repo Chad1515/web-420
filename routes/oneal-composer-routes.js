@@ -50,34 +50,33 @@ const Composer = require('../models/oneal-composer')
     }
 })
 
-
 /**
- * findComposerById
  * @openapi
  * /api/composers/{id}:
  *   get:
  *     tags:
  *       - Composers
- *     description:  API for returning a composer document
- *     summary: returns a composer document
+ *     name: findComposerById
+ *     description: Reads,retrieves a composers by id.
+ *     summary: Returns a composer by id.
+ *     operationId: findComposerById
  *     parameters:
  *       - name: id
  *         in: path
  *         required: true
- *         description: Composer document id
+ *         description: Id to filter the composers collection by.
  *         schema:
  *           type: string
  *     responses:
  *       '200':
- *         description: Composer document
+ *         description: Returned a composer with corresponding Id
  *       '500':
- *         description: Server exception
+ *         description: Server Exception
  *       '501':
  *         description: MongoDB Exception
- */
- router.get('/composers/{:id}', async(req, res) => {
+ */ router.get('/composers/:id', async(req, res) => {
     try {
-        Composer.findOne({'_id': req.params.id}, function(err, composer) {
+        Composer.findOne({_id: req.params.id}, function(err, composer) {
             if (err) {
                 console.log(err);
                 res.status(500).send({
@@ -95,7 +94,6 @@ const Composer = require('../models/oneal-composer')
         })
     }
 })
-
 /**
  * createComposer
  * @openapi
@@ -104,10 +102,10 @@ const Composer = require('../models/oneal-composer')
  *     tags:
  *       - Composers
  *     name: createComposer
- *     description: API for adding a new composer document to MongoDB Atlas
- *     summary: Creates a new composer document
+ *     description: API for adding new composer objects
+ *     summary: Creates new composer object
  *     requestBody:
- *      description: Composer information
+ *      description: Composer's information
  *      content:
  *        application/json:
  *          schema:
@@ -116,10 +114,8 @@ const Composer = require('../models/oneal-composer')
  *              - lastName
  *            properties:
  *              firstName:
- *                description: First name of composer
  *                type: string
  *              lastName:
- *                description: Last name of composer
  *                type: string
  *     responses:
  *       '200':
@@ -129,27 +125,30 @@ const Composer = require('../models/oneal-composer')
  *       '501':
  *         description: MongoDB Exception
  */
- router.post('/composers', async(req, res) => {
-    try {
-        const newComposer = {
-            type: req.body.type
-        }
+ router.post('/composers', async (req, res) => {
+	try {
+		const newComposer = {
+			firstName: req.body.firstName,
+			lastName: req.body.lastName,
+		};
 
-        await Composer.create(newComposer, function(err, composer) {
-            if (err) {
-                console.log(err);
-                res.status(501).send({
-                    'message': `MongoDB Exception: ${err}`
-                })
-            } else {
-                console.log(composer);
-                res.json(composer);
-            }
-        })
-    } catch (e) {
-        console.log(e);
-        res.status(500).send({
-            'message': `Server Exception: ${e.message}`
-        })
-    }
-})
+		await Composer.create(newComposer, function (err, composer) {
+			if (err) {
+				console.log(err);
+				res.status(501).send({
+					message: `MongoDB Exception: ${err}`,
+				});
+			} else {
+				console.log(composer);
+				res.json(composer);
+			}
+		});
+	} catch (e) {
+		console.log(e);
+		res.status(500).send({
+			message: `Server Exception: ${e.message}`,
+		});
+	}
+});
+
+module.exports = router;

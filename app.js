@@ -11,6 +11,7 @@ const http = require("http");
 const swaggerUi = require("swagger-ui-express");
 const swaggerJsdoc = require("swagger-jsdoc");
 const mongoose = require("mongoose");
+const composerApi = require('./routes/oneal-composer-routes');
 
 // app variable
 const app = express();
@@ -23,6 +24,20 @@ app.use(express.json());
 
 // requires use of URL encoded
 app.use(express.urlencoded({ extended: true }));
+
+/**
+ * MongoDB Atlas connection string
+ */
+ const conn = 'mongodb+srv://web420_user:s3cret@bellevueuniversity.ox0t9kr.mongodb.net/web420DB';
+ mongoose.connect(conn, {
+     promiseLibrary: require('bluebird'),
+     useUnifiedTopology: true,
+     useNewUrlParser: true
+ }).then(() => {
+     console.log(`Connection to web420DB on MongoDB Atlas successful`);
+ }).catch(err => {
+     console.log(`MongoDB Error: ${err.message}`);
+ })
 
 // object literal options
 const options = {
@@ -41,6 +56,9 @@ const openapiSpecification = swaggerJsdoc(options);
 
 // wiring of openapiSpecification
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(openapiSpecification));
+
+// Routes
+app.use('/api', composerApi);
 
 // routes
 app.get("/", (req, res) => {
