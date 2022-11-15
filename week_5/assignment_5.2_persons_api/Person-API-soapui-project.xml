@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="782fd91b-eb73-4e63-9ae1-b3199ccccb7c" activeEnvironment="Default" name="Person API" resourceRoot="" soapui-version="5.7.0" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:RestService" id="46074914-37ea-4ef9-95f0-64d229717cbb" wadlVersion="http://wadl.dev.java.net/2009/02" name="http://localhost:3000" type="rest" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache/><con:endpoints><con:endpoint>http://localhost:3000</con:endpoint></con:endpoints><con:resource name="findAllPersons" path="/api/persons" id="fb04e827-a7d6-4731-8c24-d7833ed34795"><con:settings/><con:parameters/><con:method name="Method 1" id="f81cc524-0d86-48c4-a7d5-1bdfa5e3aac4" method="GET"><con:settings/><con:parameters/><con:representation type="RESPONSE"><con:mediaType>application/json; charset=utf-8</con:mediaType><con:status>200</con:status><con:params/><con:element>Response</con:element></con:representation><con:request name="Request 1" id="44325f66-b7ab-4530-aafa-2321c23be767" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://localhost:3000</con:endpoint><con:request/><con:originalUri>http://localhost/api/persons</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:request></con:method></con:resource><con:resource name="createPerson" path="/api/persons" id="fdb5f80a-97fc-4aca-9048-d827d3d30502"><con:settings/><con:parameters/><con:method name="Method 2" id="8aa821d8-8648-4c1c-98dd-e2e695b515d1" method="POST"><con:settings/><con:parameters/><con:representation type="REQUEST"><con:mediaType>application/json</con:mediaType><con:params/></con:representation><con:representation type="RESPONSE"><con:mediaType>application/json; charset=utf-8</con:mediaType><con:status>200</con:status><con:params/><con:element xmlns:per="http://localhost/api/persons">per:Response</con:element></con:representation><con:request name="Request 2" id="16ad1835-3727-4a41-b5da-4855046bc749" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://localhost:3000</con:endpoint><con:request>{
+  "firstName": "Brad",
+  "lastName": "Craig",
+  "roles": [
+    {
+      "text": "admin"
+    }
+  ],
+  "dependents": [
+    {
+      "firstName": "Ashley",
+      "lastName": "Kirby"
+    }
+  ],
+  "birthDate": "November 12, 1981"
+}</con:request><con:originalUri>http://localhost/api/persons</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:request></con:method></con:resource></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/><con:sensitiveInformation/></con:soapui-project>
