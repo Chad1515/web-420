@@ -14,6 +14,8 @@ const mongoose = require("mongoose");
 const composerApi = require('./routes/oneal-composer-routes');
 const personAPI = require('./routes/oneal-person-routes.js');
 const UserApi = require("./routes/oneal-session-routes")
+const CustomerApi = require("./routes/oneal-shopper-routes")
+
 
 // app variable
 const app = express();
@@ -62,7 +64,8 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(openapiSpecification));
 // Routes
 app.use('/api', composerApi);
 app.use('/api', personAPI);
-app.use('/api', UserApi)
+app.use('/api', UserApi);
+app.use('/api', CustomerApi)
 
 // routes
 app.get("/", (req, res) => {
