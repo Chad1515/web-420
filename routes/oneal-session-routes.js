@@ -10,7 +10,7 @@
 const express = require("express");
 const User = require("../models/oneal-user.js");
 const router = express.Router();
-const bcrypt = require("bcryptjs");
+
 const saltRounds = 10;
 
 /**
