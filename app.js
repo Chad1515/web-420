@@ -71,9 +71,8 @@ app.use('/api', TeamAPI);
 
 // Defining an endpoint
 app.get('/', function(req, res){
-   res.location('http://localhost:3000/api/docs');
-   console.log(res.get('location')); //
-   http://http://localhost:3000/api/docs
+   res.location('http://localhost:3000/api-docs/');
+   console.log(res.get('location')); //http://localhost:3000/api/docs/
    res.end();
 });
 
