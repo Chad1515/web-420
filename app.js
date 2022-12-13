@@ -70,7 +70,7 @@ app.use('/api', CustomerApi);
 app.use('/api', TeamAPI);
 
 // routes
-app.get("/api-docs", (req, res) => {
+app.get("/", (req, res) => {
    res.send("Welcome to the Web 420 RESTful APIs");
 });
 
