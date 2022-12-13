@@ -69,11 +69,9 @@ app.use('/api', UserApi);
 app.use('/api', CustomerApi);
 app.use('/api', TeamAPI);
 
-// Defining an endpoint
-app.get('/', function(req, res){
-   res.location('http://localhost:3000/api-docs/');
-   console.log(res.get('location')); //http://localhost:3000/api/docs/
-   res.end();
+// Directing route to api-docs
+app.get("*", (req, res) => {
+	res.redirect("https://oneal-capstone-api.onrender.com/api-docs");
 });
 
 // app has started and listens on port 
