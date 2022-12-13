@@ -71,7 +71,7 @@ app.use('/api', TeamAPI);
 
 // routes
 app.get("/", (req, res) => {
-   res.send("Welcome to the Web 420 RESTful APIs");
+   res.location('http://localhost:3000/api/docs')
 });
 
 // app has started and listens on port 
