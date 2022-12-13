@@ -69,9 +69,12 @@ app.use('/api', UserApi);
 app.use('/api', CustomerApi);
 app.use('/api', TeamAPI);
 
-// routes
-app.get("/", (req, res) => {
-   res.location('http://localhost:3000/api/docs')
+// Defining an endpoint
+app.get('/', function(req, res){
+   res.location('http://localhost:3000/api/docs');
+   console.log(res.get('location')); //
+   http://http://localhost:3000/api/docs
+   res.end();
 });
 
 // app has started and listens on port 
