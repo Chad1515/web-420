@@ -3,7 +3,8 @@
 ; Author: Chad ONeal
 ; Start Date: 10/19/2022
 ; Description: WEB 420 app.js
-============================================ */
+============================================ 
+*/
 
 // require statements
 const express = require("express");
@@ -13,9 +14,9 @@ const swaggerJsdoc = require("swagger-jsdoc");
 const mongoose = require("mongoose");
 const composerApi = require('./routes/oneal-composer-routes');
 const personAPI = require('./routes/oneal-person-routes.js');
-const UserApi = require("./routes/oneal-session-routes")
-const CustomerApi = require("./routes/oneal-shopper-routes")
-
+const UserApi = require("./routes/oneal-session-routes");
+const CustomerApi = require("./routes/oneal-shopper-routes");
+const TeamAPI = require('./routes/oneal-capstone-routes.js');
 
 // app variable
 const app = express();
@@ -65,7 +66,8 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(openapiSpecification));
 app.use('/api', composerApi);
 app.use('/api', personAPI);
 app.use('/api', UserApi);
-app.use('/api', CustomerApi)
+app.use('/api', CustomerApi);
+app.use('/api', TeamAPI);
 
 // routes
 app.get("/", (req, res) => {

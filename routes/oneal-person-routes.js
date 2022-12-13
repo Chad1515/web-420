@@ -28,6 +28,7 @@ const router = express.Router();
  *       '501':
  *         description: MongoDB Exception.
  */
+
  router.get('/persons', async(req, res) => {
     try {
         Person.find({}, function(err, persons) {
