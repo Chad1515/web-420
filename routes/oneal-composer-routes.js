@@ -57,7 +57,7 @@ const Composer = require('../models/oneal-composer')
  *     tags:
  *       - Composers
  *     name: findComposerById
- *     description: Reads,retrieves a composers by id.
+ *     description: Reads, retrieves a composers by id.
  *     summary: Returns a composer by id.
  *     operationId: findComposerById
  *     parameters:
@@ -152,78 +152,9 @@ const Composer = require('../models/oneal-composer')
 	}
 });
 
-/**
- * updateComposerById
- * @openapi
- * /api/composers/{id}:
- *   put:
- *     tags:
- *       - Composers
- *     description: Update a composer's first name and last name
- *     summary: update a composer by id
- *     operationId: updateComposerById
- *     parameters:
- *       - name: id
- *         in: path
- *         required: true
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required:
- *               - firstName
- *               - lastName
- *             properties:
- *               firstName:
- *                 type: string
- *               lastName:
- *                 type: string
- *     responses:
- *       '200':
- *         description: Array of composer documents
- *       '401':
- *         description: Invalid composerId
- *       '500':
- *         description: Server Exception
- *       '501':
- *         description: MongoDB Exception
- */
 
- router.put('updateComposerByID', async (req, res) => {
-    try {
-      const id = req.params.id;
-      Composer.findOne({ _id: id }, function (err, composer) {
-        if (composer) {
-          composer.set({
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-          });
-          composer.save(function (err, savedComposer) {
-            if (err) {
-              res.status(501).send({
-                message: `MongoDB Exception:${err}`,
-              });
-            } else {
-              res.json(savedComposer);
-            }
-          });
-        } else if (!composer) {
-          res.status(401).send({
-            message: `Invalid composerID ${err}`,
-          });
-        } else {
-          res.status(501).send({ message: `MongoDB Exception: ${err}` });
-        }
-      });
-    } catch (e) {
-      res.status(500).send({
-        message: `Server Exception: ${e.message}`,
-      });
-    }
-  });
-  
+
+
 /**
    * deleteComposerById
    * @openapi
@@ -269,5 +200,79 @@ const Composer = require('../models/oneal-composer')
       });
     }
   });
+
+/**
+ * updateComposerById
+ * @openapi
+ * /api/composers/{id}:
+ *   put:
+ *     tags:
+ *       - Composers
+ *     description: API for updating an existing composer document.
+ *     summary: updates existing composer document in database.
+ *     parameters: 
+ *       - in: path
+ *         name: id
+ *         description: id to update
+ *         schema:
+ *           type: string
+ *           
+ *     requestBody:
+ *       description: composer information
+ *       content:
+ *         application/json:
+ *           schema:
+ *             required:
+ *               - firstName
+ *               - lastName
+ *             properties:
+ *               firstName:
+ *                 type: string
+ *               lastName:
+ *                 type: string
+ *     responses:
+ *       '200':
+ *         description: Composer Document.
+ *       '500':
+ *         description: Server Exception.
+ *       '501':
+ *         description: MongoDB Exception.
+ */
+router.put('/composers/:id', async (req, res) => {
+	try {
+		const composerId = req.params.id;
+
+		Composer.findOne({ _id: composerId }, function (err, composer) {
+			if (err) {
+				console.log(err);
+				res.status(401).send({
+					message: `Invalid ComposerId: ${err}`,
+				});
+			} else {
+				console.log(composer);
+				composer.set({
+					firstName: req.body.firstName,
+					lastName: req.body.lastName,
+				});
+				composer.save(function (err, updatedComposer) {
+					if (err) {
+						console.log(err);
+						res.status(501).send({
+							message: `MongoDB Exception: ${err}`,
+						});
+					} else {
+						console.log(updatedComposer);
+						res.json(updatedComposer);
+					}
+				});
+			}
+		});
+	} catch (e) {
+		console.log(e);
+		res.status(500).send({
+			message: `Server Exception: ${e.message}`,
+		});
+	}
+});
 
 module.exports = router;
